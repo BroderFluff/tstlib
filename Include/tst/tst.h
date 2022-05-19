@@ -19,7 +19,7 @@
 #define NORETURN
 #endif
 
-const char* fail_fmt = "Failed!\n%s(%d): Assertion failed: (%s)\n";
+inline const char* fail_fmt = "Failed!\n%s(%d): Assertion failed: (%s)\n";
 
 #define UNIT_TEST(n) static tst::function n##_func(#n, n)
 #define ASSERT_EQ(a, b) ASSERT_TRUE((a) == (b))
