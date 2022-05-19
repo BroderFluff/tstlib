@@ -18,6 +18,8 @@ target_compile_features(tst
 target_include_directories(tst
 	PRIVATE
 		Include/tst
+	PUBLIC
+		Include/
 )
 
 add_subdirectory(Src/)
