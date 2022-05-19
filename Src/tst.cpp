@@ -17,7 +17,7 @@ void run_all() {
     }
 }
 
-NORETURN void run_match(const std::string_view& pattern) {
+void run_match(const std::string_view& pattern) {
     const std::regex name(pattern.data());
 
     for (const auto& test : tests) {
