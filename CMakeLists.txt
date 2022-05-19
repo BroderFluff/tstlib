@@ -1,14 +1,23 @@
 cmake_minimum_required(VERSION 3.18)
 
-project(Testy
+project(TST
 	VERSION 0.0.1
 	DESCRIPTION "Unit tests for C++ code"
 	LANGUAGES CXX
 )
 
-add_library(Testy STATIC)
+#add_library(Testy STATIC)
 
-target_include_directories(Testy
+add_executable(tst "")
+
+target_compile_features(tst
 	PRIVATE
-		Include/testy
+		cxx_std_20
 )
+
+target_include_directories(tst
+	PRIVATE
+		Include/tst
+)
+
+add_subdirectory(Src/)

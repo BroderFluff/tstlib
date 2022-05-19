@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.18)
 
-target_sources(Testy
+target_sources(tst
 	PRIVATE
-		testy.cpp
+		tst.cpp
 )

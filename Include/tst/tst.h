@@ -1,3 +1,7 @@
+#pragma once
+#ifndef TST_H
+#define TST_H
+
 #include <cstdlib>
 #include <string_view>
 
@@ -15,7 +19,7 @@ using std::experimental::source_location;
 #define NORETURN
 #endif
 
-#define UNIT_TEST(n) testorosso::TestFunction n##_func(#n, n)
+#define UNIT_TEST(n) tst::function n##_func(#n, n)
 
 #define ASSERT_EQ(a, b) ASSERT_TRUE((a) == (b))
 
@@ -33,7 +37,7 @@ NORETURN inline bool assertTrue(const char* expr, const char* file, int line) {
 }
 #endif
 
-namespace testy {
+namespace tst {
 
 void           run_all();
 void           run_match(const std::string_view& pattern);
@@ -42,37 +46,47 @@ using pfn_test = void (*)();
 
 class function_base {
 public:
+    explicit function_base(std::string_view name) noexcept;
+
     virtual ~function_base() = default;
 
-    virtual void run() = 0;
+    const char* get_name() const { return name.data(); }
+
+    virtual void run() const = 0;
+
+private:
+    std::string_view name;
 };
 
 template <class Fn>
 class function : public function_base {
 public:
     function(std::string_view name, Fn fn) noexcept :
-        name{ name },
+        function_base(name),
         fn{ fn } {
     }
 
-    void run() override {
-        std::fprintf(stdout, "%s\n", name.data());
+    void run() const override {
+        std::fprintf(stdout, "%s\n", get_name());
         fn();
     }
 
 private:
-    std::string_view name;
     Fn fn;
 };
 
+#if 0
 class test_function {
 public:
-    constexpr test_function(const char* name, TestFunc fn) noexcept;
+    constexpr test_function(const char* name, pfn_test fn) noexcept;
     void run() const;
 
 private:
     const char* test_name;
     pfn_test    fn;
 };
+#endif
 
 }
+
+#endif // TST_H
