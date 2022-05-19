@@ -3,46 +3,35 @@
 #include <vector>
 #include <regex>
 #include <string_view>
+#include <functional>
 
 namespace tst {
 
 static std::vector<function_base*> tests;
 
 void run_all() {
-    std::fprintf(stdout, "Running %d tests.\n", tests.size());
-    for (const auto* test : tests) {
-        test->run();
+    std::fprintf(stdout, "Running %zi tests.\n", tests.size());
+    for (const auto *test : tests) {
+        std::invoke(*test);
+        std::puts("Success!");
     }
 }
 
-void run_match(const std::string_view& pattern) {
-    std::regex name(pattern.data());
+NORETURN void run_match(const std::string_view& pattern) {
+    const std::regex name(pattern.data());
 
-    for (const auto* test : tests) {
+    for (const auto& test : tests) {
         if (std::regex_search(test->get_name(), name)) {
-            test->run();
+            std::invoke(*test);
+            std::puts("Success!");
         }
     }
 }
 
 function_base::function_base(std::string_view name) noexcept :
     name{ name } {
-
-    tests.push_back(this);
-
-}
-
-#if 0
-constexpr test_function::test_function(const char* name, pfn_test fn) noexcept
-    , fn{ fn } {
     tests.push_back(this);
 }
-
-void test_function::run() const {
-    std::fprintf(stdout, "%s\n", get_name());
-    fn();
-}
-#endif
 
 }
 
@@ -51,9 +40,17 @@ static void T_TestTest() {
 }
 UNIT_TEST(T_TestTest);
 
+static void T_AAA() {
+    ASSERT_EQ(0, 0);
+    ASSERT_NEQ(8, 7);
+}
+UNIT_TEST(T_AAA);
+
 int main(int argc, char* argv[]) {
     if (argc > 1) {
-        tst::run_match(argv[1]);
+        for (int i = 1; i < argc; ++i) {
+            tst::run_match(argv[i]);
+        }
     } else {
         tst::run_all();
     }
