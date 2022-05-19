@@ -6,9 +6,9 @@ project(TST
 	LANGUAGES CXX
 )
 
-#add_library(Testy STATIC)
+add_library(tst STATIC)
 
-add_executable(tst "")
+#add_executable(tst "")
 
 target_compile_features(tst
 	PRIVATE
