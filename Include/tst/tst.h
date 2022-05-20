@@ -14,9 +14,9 @@
 #endif
 
 #if __has_cpp_attribute(noreturn)
-#define NORETURN [[noreturn]]
+#   define NORETURN [[noreturn]]
 #else
-#define NORETURN
+#   define NORETURN
 #endif
 
 inline const char* fail_fmt = "Failed!\n%s(%d): Assertion failed: (%s)\n";
