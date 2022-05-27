@@ -35,17 +35,6 @@ function_base::function_base(std::string_view name) noexcept :
 
 }
 
-static void T_TestTest() {
-    ASSERT_EQ(1, 1);
-}
-UNIT_TEST(T_TestTest);
-
-static void T_AAA() {
-    ASSERT_EQ(0, 0);
-    ASSERT_NEQ(8, 7);
-}
-UNIT_TEST(T_AAA);
-
 int main(int argc, char* argv[]) {
     if (argc > 1) {
         for (int i = 1; i < argc; ++i) {

@@ -8,8 +8,6 @@ project(TST
 
 add_library(tst STATIC)
 
-#add_executable(tst "")
-
 target_compile_features(tst
 	PRIVATE
 		cxx_std_20
