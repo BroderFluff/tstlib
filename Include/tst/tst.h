@@ -2,12 +2,13 @@
 #ifndef TST_H
 #define TST_H
 
+#include <cstdio>
 #include <cstdlib>
 #include <string_view>
 
 #if __has_include(<source_location>)
 #   include <source_location>
-    using source_location = std::source_location;
+    using std::source_location;
 #elif __has_include(<experimental/source_location>)
 #   include <experimental/source_location>
     using std::experimental::source_location;
@@ -25,7 +26,7 @@ inline const char* fail_fmt = "Failed!\n%s(%d): Assertion failed: (%s)\n";
 #define ASSERT_EQ(a, b) ASSERT_TRUE((a) == (b))
 #define ASSERT_NEQ(a, b) ASSERT_TRUE((a) != (b))
 
-#if 0 && defined(__cpp_lib_source_location) || defined(__cpp_lib_experimental_source_location)
+#if defined(__cpp_lib_source_location) || defined(__cpp_lib_experimental_source_location)
 #   define ASSERT_TRUE(expr) (void) ((expr) || (assertTrue(#expr)))
 NORETURN inline bool assertTrue(const char* expr, const source_location& src = source_location::current()) {
     std::fprintf(stderr, fail_fmt, src.file_name(), src.line(), expr);
